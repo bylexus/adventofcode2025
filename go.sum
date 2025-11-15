@@ -1,0 +1,6 @@
+github.com/bylexus/go-stdlib v0.0.0-20241202152938-16dc4197cfba h1:+RnL29Th2dg3R5ElQBfvR3/HOUAoZteW/t989k+ZZ/s=
+github.com/bylexus/go-stdlib v0.0.0-20241202152938-16dc4197cfba/go.mod h1:238Ydq0HtE66jslh8gg4VLlRxBhv8SYqXHBlQM2+tdY=
+golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f h1:XdNn9LlyWAhLVp6P/i8QYBW+hlyhrhei9uErw2B5GJo=
+golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f/go.mod h1:D5SMRVC3C2/4+F/DB1wZsLRnSNimn2Sp/NPsCrsv8ak=
+golang.org/x/exp v0.0.0-20251113190631-e25ba8c21ef6 h1:zfMcR1Cs4KNuomFFgGefv5N0czO2XZpUbxGUy8i8ug0=
+golang.org/x/exp v0.0.0-20251113190631-e25ba8c21ef6/go.mod h1:46edojNIoXTNOhySWIWdix628clX9ODXwPsQuG6hsK0=
