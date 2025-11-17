@@ -23,6 +23,25 @@ $ go run
 
 ## Define Problems
 
+### via template cli
+
+run
+
+```
+go run cmd/create-template/main.go [nr] [title]
+```
+
+e.g.:
+
+```
+go run cmd/create-template/main.go 2 The second problem
+```
+
+This will create the new problem files as well as the needed entries in the main entrypoint file (`aoc.go`).
+
+
+### manually
+
 1) Create a struct in the `problems` package that implements the `Problem` interface, e.g.:
 
 ```go

@@ -205,3 +205,9 @@ func Memoize[T comparable, U any](fn func(a T) U) func(a T) U {
 		return res
 	}
 }
+func FileExists(path string) bool {
+	// good enough: if err IS something, it may still be some
+	// other problem, but for the actual use-case, this is good enough:
+	_, err := os.Stat(path)
+	return err == nil
+}

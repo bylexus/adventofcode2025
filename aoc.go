@@ -10,12 +10,14 @@ import (
 
 	"alexi.ch/aoc/2025/problems"
 	"alexi.ch/aoc/2025/problems/day01"
+	//template:"alexi.ch/aoc/2025/problems/day{{- .ProblemNumber | format "%02d" -}}"
 )
 
 func main() {
 	tannenbaum()
 	var problem_map = map[string](func() problems.Problem){
-		"01":         func() problems.Problem { p := day01.New(); return &p },
+		"01": func() problems.Problem { p := day01.New(); return &p },
+		//template:"{{- .ProblemNumber | format "%02d" -}}": func() problems.Problem { p := day{{- .ProblemNumber | format "%02d" -}}.New(); return &p },
 		"playground": func() problems.Problem { p := problems.NewPlayground(); return &p },
 	}
 
