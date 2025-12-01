@@ -3,93 +3,107 @@ package day01
 import (
 	"fmt"
 	"regexp"
-	"slices"
-	"strconv"
 
 	"alexi.ch/aoc/2025/lib"
-	"github.com/bylexus/go-stdlib/eerr"
 )
 
-type Day01 struct {
-	leftNumbers  []int
-	rightNumbers []int
+type Input struct {
+	Dir    int
+	Amount int
+}
 
-	s1 int
-	s2 int
+type Day01 struct {
+	s1    int
+	s2    int
+	input []Input
 }
 
 func New() Day01 {
-	return Day01{leftNumbers: make([]int, 0), rightNumbers: make([]int, 0)}
+	return Day01{input: make([]Input, 0)}
 }
 
 func (d *Day01) Title() string {
-	return "Day 01 - Historian Hysteria"
+	return "Day 01 - Secret Entrance"
 }
 
 func (d *Day01) Setup() {
 	var lines = lib.ReadLines("data/01-data.txt")
 	// var lines = lib.ReadLines("data/01-test-data.txt")
 	for _, line := range lines {
-		r := regexp.MustCompile(`(\d+)\s+(\d+)`)
+		r := regexp.MustCompile(`(L|R)(\d+)`)
 		matches := r.FindStringSubmatch(line)
 		// fmt.Printf("line: %#v\n", matches)
 		if len(matches) == 3 {
-			leftNr, err := strconv.ParseUint(matches[1], 10, 64)
-			eerr.PanicOnErr(err)
-			rightNumber, err := strconv.ParseUint(matches[2], 10, 64)
-			eerr.PanicOnErr(err)
-			d.leftNumbers = append(d.leftNumbers, int(leftNr))
-			d.rightNumbers = append(d.rightNumbers, int(rightNumber))
+			input := Input{}
+			if matches[1] == "L" {
+				input.Dir = -1
+			} else if matches[1] == "R" {
+				input.Dir = 1
+			} else {
+				panic("Unknown dir")
+			}
+			input.Amount = lib.StrToInt(matches[2])
+			d.input = append(d.input, input)
 		}
 	}
-	// fmt.Printf("%#v\n", d.leftNumbers)
-	// fmt.Printf("%#v\n", d.rightNumber)
 }
 
 func (d *Day01) SolveProblem1() {
-	// Idea:
-	// first, sort both lists.
-	// Then just walk the left list, and compare the number on the right,
-	// calc distances and sum up:
-
-	// sort both input arrays
-	slices.Sort(d.leftNumbers)
-	slices.Sort(d.rightNumbers)
-	sum := 0
-	for i := range d.leftNumbers {
-		d := lib.Abs(d.leftNumbers[i] - d.rightNumbers[i])
-		sum += d
+	dial := 50
+	zeroes := 0
+	for _, input := range d.input {
+		// fmt.Printf("Before: %d, ", dial)
+		amount := input.Amount * input.Dir
+		// fmt.Printf("amount: %d, ", amount)
+		newDial := (dial + amount) % 100
+		if newDial < 0 {
+			dial = 100 + newDial
+		} else {
+			dial = newDial
+		}
+		// fmt.Printf("after: %d\n", dial)
+		if dial == 0 {
+			zeroes++
+		}
 	}
-	d.s1 = sum
+	d.s1 = zeroes
 }
 
 func (d *Day01) SolveProblem2() {
-	// Idea:
-	// walk through the left list, and count the entries on the right with the same number.
-	// Cache the result in a map, to avoid double counting.
-	// Just prod / sum them up in the process:
-	nrMap := make(map[int]int)
-	sum := 0
-	for i := range d.leftNumbers {
-		leftNr := d.leftNumbers[i]
-		countRight, present := nrMap[d.leftNumbers[i]]
-		if !present {
-			countRight = countNrs(d.rightNumbers, leftNr)
-			nrMap[leftNr] = countRight
-		}
-		sum += leftNr * countRight
-	}
-	d.s2 = sum
-}
+	// I'm sure there would be a more elegant solution ....
+	// bloody modulus and off-by-one's :-)
 
-func countNrs(list []int, n int) int {
-	count := 0
-	for _, entry := range list {
-		if entry == n {
-			count++
+	dial := 50
+	zeroes := 0
+	for _, input := range d.input {
+		amount := input.Amount * input.Dir
+		rest := (dial + amount)
+		zeroPassings := 0
+		// we dial backwards over 0:
+		if rest < 0 {
+			zeroPassings = lib.Abs((dial + amount) / 100)
+			// if we were on 0 already, we don't count the 1st zero passing. Else, we
+			// have to count the 1st zero passing, too:
+			if dial > 0 {
+				zeroPassings++
+			}
+		} else if rest == 0 {
+			// we landed on zero:
+			zeroPassings++
+		} else {
+			// we dialed to the right:
+			zeroPassings = lib.Abs((dial + amount) / 100)
+		}
+
+		zeroes += zeroPassings
+		rest = rest % 100
+		if rest < 0 {
+			dial = 100 + rest
+		} else {
+			dial = rest
 		}
 	}
-	return count
+	d.s2 = zeroes
 }
 
 func (d *Day01) Solution1() string {

@@ -57,6 +57,9 @@ func main() {
 
 	// create entry in main (aoc.go):
 	processMainEntrypoint(tplData)
+
+	// create empty data files:
+	createDataFiles(tplData)
 }
 
 func createProblemFile(tplData TemplateData) error {
@@ -125,4 +128,19 @@ func processMainEntrypoint(tplData TemplateData) {
 
 	err = os.WriteFile(mainName, []byte(mainStr), 0755)
 	lib.Check(err)
+}
+
+func createDataFiles(tplData TemplateData) {
+	dataDir := path.Join(tplData.Cwd, "data")
+	fmt.Printf("Creating data files in %s\n", dataDir)
+	dataFile := fmt.Sprintf("%02d-data.txt", tplData.ProblemNumber)
+	testDataFile := fmt.Sprintf("%02d-test-data.txt", tplData.ProblemNumber)
+
+	dfh, err := os.Create(path.Join(dataDir, dataFile))
+	lib.Check(err)
+	defer dfh.Close()
+
+	tfh, err := os.Create(path.Join(dataDir, testDataFile))
+	lib.Check(err)
+	defer tfh.Close()
 }
