@@ -61,16 +61,13 @@ func (d *Day02) SolveProblem2() {
 	for _, pair := range d.input {
 		for i := pair.From; i <= pair.To; i++ {
 			str := strconv.Itoa(i)
+			// create all sub-strings from length 1 to 1/2 len(s),
+			// then count the sub-string repeats: must match len(s) / len(substring)
 			for ln := 1; ln <= len(str)/2; ln++ {
-				splits := lib.CutIntoPartsOfLen(str, ln)
-				splitMap := make(map[string]int)
-				for _, split := range splits {
-					splitMap[split] += 1
-				}
-				if len(splitMap) == 1 && splitMap[splits[0]] > 1 {
+				substr := str[:ln]
+				// len(s) must be a multiple of len(sub), and the number of the substr count can also be calculated:
+				if len(str)%len(substr) == 0 && strings.Count(str, substr) == len(str)/len(substr) {
 					d.s2 += i
-					// fmt.Printf("Invalid: %d\n", i)
-					// fmt.Printf("  splits: %#v\n", splits)
 					break
 				}
 			}
