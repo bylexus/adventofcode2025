@@ -211,3 +211,17 @@ func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
 }
+
+// Cut string into same-length parts (and the rest at the end)
+func CutIntoPartsOfLen(s string, l int) []string {
+	parts := make([]string, 0)
+	splitter := l
+	for {
+		parts = append(parts, s[splitter-l:Min(splitter, len(s))])
+		if splitter >= len(s) {
+			break
+		}
+		splitter += l
+	}
+	return parts
+}
