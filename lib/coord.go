@@ -8,6 +8,21 @@ type Coord struct {
 	Z int
 }
 
+var DIRS_2D_8_NEIGHBOURS []Coord
+
+func init() {
+	DIRS_2D_8_NEIGHBOURS = []Coord{
+		NewCoord2D(-1, -1),
+		NewCoord2D(0, -1),
+		NewCoord2D(1, -1),
+		NewCoord2D(-1, 0),
+		NewCoord2D(1, 0),
+		NewCoord2D(-1, 1),
+		NewCoord2D(0, 1),
+		NewCoord2D(1, 1),
+	}
+}
+
 func NewCoord3D(x int, y int, z int) Coord {
 	return Coord{X: x, Y: y, Z: z}
 }

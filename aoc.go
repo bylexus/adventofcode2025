@@ -10,9 +10,11 @@ import (
 
 	"alexi.ch/aoc/2025/problems"
 	"alexi.ch/aoc/2025/problems/day01"
+
 	//template:"alexi.ch/aoc/2025/problems/day{{- .ProblemNumber | format "%02d" -}}"
-"alexi.ch/aoc/2025/problems/day03"
-"alexi.ch/aoc/2025/problems/day02"
+"alexi.ch/aoc/2025/problems/day04"
+	"alexi.ch/aoc/2025/problems/day02"
+	"alexi.ch/aoc/2025/problems/day03"
 )
 
 func main() {
@@ -20,8 +22,9 @@ func main() {
 	var problem_map = map[string](func() problems.Problem){
 		"01": func() problems.Problem { p := day01.New(); return &p },
 		//template:"{{- .ProblemNumber | format "%02d" -}}": func() problems.Problem { p := day{{- .ProblemNumber | format "%02d" -}}.New(); return &p },
-"03": func() problems.Problem { p := day03.New(); return &p },
-"02": func() problems.Problem { p := day02.New(); return &p },
+"04": func() problems.Problem { p := day04.New(); return &p },
+		"03":         func() problems.Problem { p := day03.New(); return &p },
+		"02":         func() problems.Problem { p := day02.New(); return &p },
 		"playground": func() problems.Problem { p := problems.NewPlayground(); return &p },
 	}
 
@@ -79,7 +82,7 @@ func tannenbaum() {
 		" /**\x1B[1;94m*\x1B[0;32m*****\x1B[1;93m*\x1B[0;32m**\x1B[1;91m*\x1B[0;32m****\x1B[1;93m*\x1B[0;32m\\",
 		"          #",
 		"          #",
-		"       \x1B[1;97m2-0-2-4",
+		"       \x1B[1;97m2-0-2-5",
 		"       #######",
 		"\x1B[0m",
 	}, "\n")
