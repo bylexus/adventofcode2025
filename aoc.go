@@ -12,6 +12,7 @@ import (
 	"alexi.ch/aoc/2025/problems/day01"
 
 	//template:"alexi.ch/aoc/2025/problems/day{{- .ProblemNumber | format "%02d" -}}"
+"alexi.ch/aoc/2025/problems/day06"
 "alexi.ch/aoc/2025/problems/day05"
 "alexi.ch/aoc/2025/problems/day04"
 	"alexi.ch/aoc/2025/problems/day02"
@@ -23,6 +24,7 @@ func main() {
 	var problem_map = map[string](func() problems.Problem){
 		"01": func() problems.Problem { p := day01.New(); return &p },
 		//template:"{{- .ProblemNumber | format "%02d" -}}": func() problems.Problem { p := day{{- .ProblemNumber | format "%02d" -}}.New(); return &p },
+"06": func() problems.Problem { p := day06.New(); return &p },
 "05": func() problems.Problem { p := day05.New(); return &p },
 "04": func() problems.Problem { p := day04.New(); return &p },
 		"03":         func() problems.Problem { p := day03.New(); return &p },
