@@ -225,3 +225,25 @@ func CutIntoPartsOfLen(s string, l int) []string {
 	}
 	return parts
 }
+
+// PowInt computes base^exp for non-negative integers (exp ≥ 0)
+func PowInt(base, exp int) int {
+	if exp < 0 {
+		panic("powInt: exponent must be non-negative")
+	}
+	result := 1
+	for i := 0; i < exp; i++ {
+		result *= base
+	}
+	return result
+}
+
+func RemoveItem[T comparable](slice []T, item T) []T {
+	newSlice := make([]T, 0, len(slice))
+	for _, el := range slice {
+		if el != item {
+			newSlice = append(newSlice, el)
+		}
+	}
+	return newSlice
+}
